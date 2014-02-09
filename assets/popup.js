@@ -1,6 +1,5 @@
 // Copyright (c) 2014 Jonathan Howard
 // TODO: Add persistence to local storage.
-// TODO: Add play/pause to countdown.
 
 var masteryTimer = function () {
   /**
