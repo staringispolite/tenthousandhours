@@ -9,18 +9,39 @@
       width: 180px;
       font-family: "Helvetica Nueue", Helvetica, arial, sans-serif;
       margin: 0;
-      padding: 0;
+      padding: 5px;
     }
     h2 {
       margin: 0 0 10px 0;
       padding: 0;
+    }
+    .red {
       color: #ef5858;
+    }
+    .green {
+      color: #58efb1;
+    }
+    #shoutout {
+      float: left;
+      width: 140px;
+    }
+    #control {
+      float: left;
+      cursor: pointer;
+    }
+    #countdown {
+      margin-left: 3px; 
     }
   </style>
 </head>
 <body>
-  <h2>Go, go, go!</h2>
-  <div id="countdown">loading...</div>
+  <h2>
+    <div id="shoutout">Ready?</div>
+    <a id="control">
+      <img id="icon" src="play-32.png" alt="play"/>
+    </a>
+  </h2>
+  <div id="countdown">click play to start</div>
 
   <!--
     - JavaScript and HTML must be in separate files: see Content Security
@@ -28,6 +49,7 @@
     -
     - [1]: http://developer.chrome.com/extensions/contentSecurityPolicy.html
    -->
+  <script type="text/javascript" src="jquery-2.1.0.min.js"></script>
   <script src="popup.js"></script>
 </body>
 </html>

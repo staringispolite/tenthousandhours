@@ -15,9 +15,22 @@ var masteryTimer = function () {
   /**
    * The number of seconds 'required' for mastery under the 10,000
    * hours rule.
+   * 
+   * @type {int}
+   * @private
    */
    var secondsRequired = 10000 * 60 * 60;
 
+  /**
+   * True if paused, false otherwise.
+   * 
+   * @type {bool}
+   * @private
+   */
+   var isPaused = true;
+
+   var imgUrlPlay = "play-32.png";
+   var imgUrlPause = "pause-32.png";
 
   /**
    * Persist current time to local storage
@@ -50,35 +63,74 @@ var masteryTimer = function () {
       // Add to displayTime.
       secondsSpent += additionalSeconds;
     },
+    /**
+     * Initialize the timer.
+     */
+    init: function() {
+      // Start ticking down as soon as the document's DOM is ready.
+      $(document).ready(function () {
+        setInterval(publicObj.tick, 1000);
+      });
+
+      // Setup play click event
+      $('#control').click(publicObj.play);
+    },
+    /** 
+     * Start counting time toward mastery.
+     */
+    play: function() {
+      // Mark as unpaused;
+      isPaused = false;
+
+      // reset starting timestamp
+
+      // switch imgUrl
+      $('#icon').attr('src', imgUrlPause);
+
+      // Switch to pause click event
+      $('#control').click(publicObj.pause);
+    }, 
+    /**
+     * Stop counting time toward mastery
+     */
+    pause: function() {
+      // Mark as paused;
+      isPaused = true;
+
+      // reset starting timestamp
+
+      // switch imgUrl
+      $('#icon').attr('src', imgUrlPlay);
+
+      // Switch to play click event
+      $('#control').click(publicObj.play);
+    }, 
     tick: function() {
       // Triggered every second.
-      publicObj.addTimeSpent(1);
-      setTimeSpent(secondsSpent);
-      publicObj.updateView();
+      if (!isPaused) {
+        publicObj.addTimeSpent(1);
+        setTimeSpent(secondsSpent);
+        publicObj.updateView();
+      }
     },
     updateView: function() {
-      var countdownEl = document.getElementById('countdown');
-      if (countdownEl !== undefined) {
-        var totalSec = secondsRequired - secondsSpent;
-        var days = parseInt(totalSec / (3600*24));
-        var hours = parseInt(totalSec / 3600) % 24;
-        var minutes = parseInt(totalSec / 60) % 60;
-        var seconds = totalSec % 60;
+      var totalSec = secondsRequired - secondsSpent;
+      var days = parseInt(totalSec / (3600*24));
+      var hours = parseInt(totalSec / 3600) % 24;
+      var minutes = parseInt(totalSec / 60) % 60;
+      var seconds = totalSec % 60;
 
-        var result = days + " days, " + 
-                     (hours < 10 ? "0" + hours : hours) + ":" + 
-                     (minutes < 10 ? "0" + minutes : minutes) + ":" + 
-                     (seconds  < 10 ? "0" + seconds : seconds +
-                     " left");
-        countdownEl.innerHTML = result;
-      }
+      var result = days + " days, " + 
+                   (hours < 10 ? "0" + hours : hours) + ":" + 
+                   (minutes < 10 ? "0" + minutes : minutes) + ":" + 
+                   (seconds  < 10 ? "0" + seconds : seconds +
+                   " left");
+      $('#countdown').html(result);
     }
   }
 
   return publicObj;
 }();
 
-// Start ticking down as soon as the document's DOM is ready.
-document.addEventListener('DOMContentLoaded', function () {
-  setInterval(masteryTimer.tick, 1000);
-});
+masteryTimer.init();
+console.log('called init');
