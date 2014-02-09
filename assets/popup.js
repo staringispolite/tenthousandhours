@@ -42,6 +42,25 @@ var masteryTimer = function () {
     // Stubbed out for now.
   };
 
+  /**
+   * Animate the icon slightly so it looks clicked
+   *
+   * @private
+   */
+  animatedClick = function() {
+    $('#icon').animate({
+        'margin-top': '2px'
+      },
+      100,
+      'swing',
+      function() {
+        $('#icon').animate({
+          'margin-top': '0'
+          },
+          100);
+      }); 
+  };
+
   var publicObj = {
     /**
      * Get from local storage
@@ -85,10 +104,11 @@ var masteryTimer = function () {
       // reset starting timestamp
 
       // Switch image, text, and to pause click event
+      animatedClick();
       $('#control').click(publicObj.pause);
       $('#icon').attr('src', imgUrlPause);
       $('#shoutout').html('Focus!').removeClass('red green').addClass('green');
-    }, 
+    },
     /**
      * Stop counting time toward mastery
      */
@@ -99,6 +119,7 @@ var masteryTimer = function () {
       // reset starting timestamp
 
       // Switch image, text, and to play click event
+      animatedClick();
       $('#icon').attr('src', imgUrlPlay);
       $('#control').click(publicObj.play);
       $('#shoutout').html('Ready?').removeClass('red green').addClass('red');
