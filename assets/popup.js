@@ -84,11 +84,10 @@ var masteryTimer = function () {
 
       // reset starting timestamp
 
-      // switch imgUrl
-      $('#icon').attr('src', imgUrlPause);
-
-      // Switch to pause click event
+      // Switch image, text, and to pause click event
       $('#control').click(publicObj.pause);
+      $('#icon').attr('src', imgUrlPause);
+      $('#shoutout').html('Focus!').removeClass('red green').addClass('green');
     }, 
     /**
      * Stop counting time toward mastery
@@ -99,11 +98,10 @@ var masteryTimer = function () {
 
       // reset starting timestamp
 
-      // switch imgUrl
+      // Switch image, text, and to play click event
       $('#icon').attr('src', imgUrlPlay);
-
-      // Switch to play click event
       $('#control').click(publicObj.play);
+      $('#shoutout').html('Ready?').removeClass('red green').addClass('red');
     }, 
     tick: function() {
       // Triggered every second.
@@ -133,4 +131,3 @@ var masteryTimer = function () {
 }();
 
 masteryTimer.init();
-console.log('called init');

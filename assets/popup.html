@@ -7,6 +7,7 @@
   <style type="text/css">
     body {
       width: 180px;
+      height: 55px;
       font-family: "Helvetica Nueue", Helvetica, arial, sans-serif;
       margin: 0;
       padding: 5px;
@@ -23,25 +24,30 @@
     }
     #shoutout {
       float: left;
-      width: 140px;
+      width: 130px;
+      border-bottom: 1px solid #DDD;
+      margin-right: 10px;
+      padding-bottom: 3px;
     }
     #control {
       float: left;
       cursor: pointer;
     }
     #countdown {
-      margin-left: 3px; 
+      position: absolute;
+      top: 43px;
+      left: 6px;
     }
   </style>
 </head>
 <body>
   <h2>
-    <div id="shoutout">Ready?</div>
+    <div id="shoutout" class="red">Ready?</div>
     <a id="control">
       <img id="icon" src="play-32.png" alt="play"/>
     </a>
   </h2>
-  <div id="countdown">click play to start</div>
+  <div id="countdown">click play to start training</div>
 
   <!--
     - JavaScript and HTML must be in separate files: see Content Security
