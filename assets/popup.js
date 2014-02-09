@@ -1,5 +1,6 @@
 // Copyright (c) 2014 Jonathan Howard
-// TODO: Add persistence to local storage.
+// TODO: Persist to Chrome's sync'ed storage occasionally
+//       (avoiding rate limits).
 
 var masteryTimer = function () {
   /**
@@ -30,15 +31,21 @@ var masteryTimer = function () {
 
    var imgUrlPlay = "play-32.png";
    var imgUrlPause = "pause-32.png";
+   var localStorageKey = "secSpent";
 
   /**
    * Persist current time to local storage
    *
-   * @param {int} currentTime
+   * @param {int} currentSecondsSpent
    * @private
    */
-  setTimeSpent = function(currentTime) {
-    // Stubbed out for now.
+  setTimeSpent = function(currentSecondsSpent) {
+    //chrome.storage.sync.set({localStorageKey: currentSecondsSpent},
+    //  function() {
+        //console.log('saved current seconds spent: ' + currentSecondsSpent);
+    //    console.log('error? ' + chrome.runtime.lastError);
+    //});
+    localStorage[localStorageKey] = currentSecondsSpent;
   };
 
   /**
@@ -62,14 +69,25 @@ var masteryTimer = function () {
 
   var publicObj = {
     /**
-     * Get from local storage
+     * Get from local storage, set timer with it
      *
      * @type {int}
      * @public
      */
-    getTimeSpent: function() {
-       // Stubbed out for now.
-       return 0;
+    getSecondsSpent: function() {
+      //console.log('key: ' + localStorageKey);
+      //chrome.storage.sync.get(localStorageKey,
+      //  function(items) {
+      //    secondsSpent = items[localStorageKey];
+      //    if (secondsSpent === undefined || isNaN(secondsSpent)) {
+      //      secondsSpent = 0;
+      //    }
+      //    //console.log('got ' + secondsSpent + ' sec spent from local storage');
+      //});
+      secondsSpent = Number(localStorage[localStorageKey]);
+      if (secondsSpent === undefined || isNaN(secondsSpent)) {
+        secondsSpent = 0;
+      }
     },
     /**
      * Allow people to add time spent before installing the extention.
@@ -100,10 +118,12 @@ var masteryTimer = function () {
       // Mark as unpaused;
       isPaused = false;
 
-      // reset starting timestamp
+      // reset starting point from storage
+      publicObj.getSecondsSpent();
 
       // Switch image, text, and to pause click event
       animatedClick();
+      $('#control').unbind('click', publicObj.play);
       $('#control').click(publicObj.pause);
       $('#icon').attr('src', imgUrlPause);
       $('#shoutout').html('Focus!').removeClass('red green').addClass('green');
@@ -120,6 +140,7 @@ var masteryTimer = function () {
       // Switch image, text, and to play click event
       animatedClick();
       $('#icon').attr('src', imgUrlPlay);
+      $('#control').unbind('click', publicObj.pause);
       $('#control').click(publicObj.play);
       $('#shoutout').html('Ready?').removeClass('red green').addClass('red');
     }, 
