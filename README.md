@@ -1,7 +1,11 @@
 tenthousandhours
 ================
 
-Countdown to Mastery
+### Countdown to Mastery
+
+If you believe the 10,000 hours rule (á la [Outliers](http://gladwell.com/outliers/the-10000-hour-rule/)) then it takes about 10,000 hours of dedicated, focused practice to attain mastery of a skill or subject. So let's. fucking. do this.
+
+This timer will keep track of your time. Start it when you start practice/work/training. Stop it when you stop.
 
 ![Screenshot](https://github.com/staringispolite/tenthousandhours/blob/master/screenshot.jpg?raw=true)
 
