@@ -1,4 +1,11 @@
 // Copyright (c) 2014 Jonathan Howard
+// TODO: Work while closed
+//       -- Timestamp based, tick only does display
+//       -- Local storage for play/pause
+//       -- Local storage for timestamp
+//       -- "loading..." first thing, while it pulls up state
+//          from local storage.
+// TODO: Icon changes to "lit up" orange when on. grey when off
 // TODO: Persist to Chrome's sync'ed storage occasionally
 //       (avoiding rate limits).
 
@@ -32,6 +39,8 @@ var masteryTimer = function () {
    var imgUrlPlay = "play-32.png";
    var imgUrlPause = "pause-32.png";
    var localStorageKey = "secSpent";
+   var iconURIplaying = "icon.png";
+   var iconURIpaused = "icoff.png";  // GET IT?? 
 
   /**
    * Persist current time to local storage
@@ -127,6 +136,10 @@ var masteryTimer = function () {
       $('#control').click(publicObj.pause);
       $('#icon').attr('src', imgUrlPause);
       $('#shoutout').html('Focus!').removeClass('red green').addClass('green');
+      // Change browser icon to 'on'.
+      chrome.browserAction.setIcon({
+        path: iconURIplaying
+      });
     },
     /**
      * Stop counting time toward mastery
@@ -143,6 +156,10 @@ var masteryTimer = function () {
       $('#control').unbind('click', publicObj.pause);
       $('#control').click(publicObj.play);
       $('#shoutout').html('Ready?').removeClass('red green').addClass('red');
+      // Change browser icon to 'off'.
+      chrome.browserAction.setIcon({
+        path: iconURIpaused
+      });
     }, 
     tick: function() {
       // Triggered every second.
