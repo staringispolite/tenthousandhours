@@ -5,7 +5,6 @@
 //       -- Local storage for timestamp
 //       -- "loading..." first thing, while it pulls up state
 //          from local storage.
-// TODO: Icon changes to "lit up" orange when on. grey when off
 // TODO: Persist to Chrome's sync'ed storage occasionally
 //       (avoiding rate limits).
 
